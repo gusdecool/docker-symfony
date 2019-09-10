@@ -1,5 +1,7 @@
 # Docker Image for Symfony Framework
 
+Master: [![CircleCI](https://circleci.com/gh/gusdecool/docker-symfony/tree/master.svg?style=svg)](https://circleci.com/gh/gusdecool/docker-symfony/tree/master)
+
 ## How to develop
 
 1. Have a copy of symfony codebase in `/symfony` directory. We can install it with command 
