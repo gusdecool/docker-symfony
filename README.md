@@ -24,6 +24,8 @@ docker run --rm \
     gusdecool/symfony
 ```
 
+then open `https://localhost:7100/` on your browser and ignore the SSL error.
+
 ## Push
 
 ```shell script
