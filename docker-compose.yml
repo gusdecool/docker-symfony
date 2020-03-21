@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+    app:
+        build: ./
+        image: gusdecool/symfony
+        ports:
+            - 7100:80
+        volumes:
+            - ./symfony:/app

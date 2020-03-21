@@ -2,6 +2,8 @@
 
 Master: [![CircleCI](https://circleci.com/gh/gusdecool/docker-symfony/tree/master.svg?style=svg)](https://circleci.com/gh/gusdecool/docker-symfony/tree/master)
 
+Download the Docker Image at https://hub.docker.com/r/gusdecool/symfony
+
 ## How to develop
 
 1. Have a copy of symfony codebase in `/symfony` directory. We can install it with command 
@@ -10,26 +12,6 @@ Master: [![CircleCI](https://circleci.com/gh/gusdecool/docker-symfony/tree/maste
 
 # Docker commands
 
-## Build
+Use Docker Compose to make it easier to manage the containers.
 
-```shell script
-docker build -t gusdecool/symfony .
-```
-
-## Run
-
-```shell script
-docker run --rm \
-    -v ${PWD}/symfony:/app \
-    -v ${HOME}/.composer:/root/.composer \
-    -p 7100:443 \
-    gusdecool/symfony
-```
-
-then open `https://localhost:7100/` on your browser and ignore the SSL error.
-
-## Push
-
-```shell script
-docker push gusdecool/symfony
-```
+run `docker-compose up -d` to run the containers

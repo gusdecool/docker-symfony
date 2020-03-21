@@ -1,6 +1,6 @@
 FROM composer:latest AS composer
 
-FROM php:7.2-apache-stretch
+FROM php:7.4.4-apache
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 ENV WORKDIR /app
@@ -28,7 +28,7 @@ RUN apt-get install -y libgd-dev
 RUN docker-php-ext-install gd
 
 # Install PHP XDebug
-RUN pecl install xdebug-2.7.2
+RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
 
 # Install PHP Soap
@@ -43,10 +43,9 @@ RUN docker-php-ext-install soap
 RUN a2enmod rewrite
 RUN a2enmod deflate
 RUN a2enmod headers
-RUN a2enmod ssl
 
 # Enable SSL sites
-RUN a2ensite default-ssl
+RUN a2ensite 000-default
 
 # Set Apache root directory
 RUN echo "Set Apache root directory"
