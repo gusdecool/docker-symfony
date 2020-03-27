@@ -33,3 +33,9 @@ Save the file and run `docker-compose up -d`. Once the command run successfully,
 Use Docker Compose to make it easier to manage the containers.
 
 run `docker-compose up -d` to run the containers
+
+## Build
+
+```shell script
+docker build -t gusdecool/symfony .
+```

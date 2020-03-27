@@ -13,8 +13,8 @@ WORKDIR ${WORKDIR}
 
 RUN apt-get update -y
 
-# Requirement for Composer
-RUN apt-get install -y zlibc git zip unzip zlib1g-dev libicu-dev g++ ssl-cert
+# Requirement for Composer and necessary tools
+RUN apt-get install -y zlibc git zip unzip zlib1g-dev libicu-dev g++ ssl-cert vim
 
 #--------------------------------------------------------------------------------------------------
 # Install PHP Modules
@@ -23,17 +23,14 @@ RUN apt-get install -y zlibc git zip unzip zlib1g-dev libicu-dev g++ ssl-cert
 # Install PHP Extension required for Symfony
 RUN docker-php-ext-install intl pdo_mysql bcmath
 
-# Install PHP GD
-RUN apt-get install -y libgd-dev
-RUN docker-php-ext-install gd
+# Install optional PHP Extension
+RUN apt-get install -y libgd-dev libxml2-dev
+RUN docker-php-ext-install gd soap
+RUN docker-php-ext-enable opcache
 
-# Install PHP XDebug
+# Install PHP XDebug, do not have on production
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
-
-# Install PHP Soap
-RUN apt-get install -y libxml2-dev
-RUN docker-php-ext-install soap
 
 #--------------------------------------------------------------------------------------------------
 # Setup Apache
