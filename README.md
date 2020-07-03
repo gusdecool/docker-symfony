@@ -6,18 +6,19 @@ Download the Docker Image at https://hub.docker.com/r/gusdecool/symfony
 
 ## How to use
 
-The best way to use this image on your local computer is by using docker compose. Create `docker-compose.yml` file
-on your Symfony root directory and copy paste the line below
+Use this image on your local computer by using docker compose. Create `docker-compose.yml` file
+on your Symfony root directory and copy paste the line below:
 
 ```yaml
 version: "3.7"
 services:
-    app:
-        image: gusdecool/symfony
-        ports:
-            - 7100:80
-        volumes:
-            - ./:/app
+  app:
+    image: gusdecool/symfony
+    ports:
+      - 7100:80
+      - 7101:443
+    volumes:
+      - ./symfony:/app
 ```
 
 Save the file and run `docker-compose up -d`. Once the command run successfully, open http://localhost:7100.
@@ -39,3 +40,9 @@ run `docker-compose up -d` to run the containers
 ```shell script
 docker build -t gusdecool/symfony .
 ```
+
+## SSL certificate
+
+`ssl-certificate` directory contains the dummy root certificate. 
+The password key is `123456`. Use tutorial from https://github.com/gusdecool/local-cert-generator
+to generate new certificate if needed or expired.

@@ -1,9 +1,10 @@
 version: "3.7"
 services:
-    app:
-        build: ./
-        image: gusdecool/symfony
-        ports:
-            - 7100:80
-        volumes:
-            - ./symfony:/app
+  app:
+    build: ./
+    image: gusdecool/symfony
+    ports:
+      - 7110:80
+      - 7111:443
+    volumes:
+      - ./symfony:/app
