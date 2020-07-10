@@ -100,5 +100,9 @@ RUN apt install -y yarn
 # Post setup
 #--------------------------------------------------------------------------------------------------
 
+# Install PHP MongoDB
+RUN pecl install mongodb
+RUN docker-php-ext-enable mongodb
+
 # Clean out directory
 RUN apt-get clean -y
