@@ -78,12 +78,12 @@ RUN sed -i \
 # Install XDEBUG
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
+
 RUN sed -i \
-    -e "s/\$/\nxdebug.remote_enable=1/" \
-    -e "s/\$/\nxdebug.remote_autostart=1/" \
+    -e "s/\$/\nxdebug.mode=\"develop,debug\"/" \
+    -e "s/\$/\nxdebug.start_with_request=\"trigger\"/" \
     -e "s/\$/\nxdebug.idekey=\"PHPSTORM\"/" \
-    -e "s/\$/\nxdebug.remote_port=9000/" \
-    -e "s/\$/\nxdebug.remote_host=host.docker.internal/" \
+    -e "s/\$/\nxdebug.client_host=host.docker.internal/" \
     /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 #--------------------------------------------------------------------------------------------------
@@ -101,8 +101,17 @@ RUN apt install -y yarn
 #--------------------------------------------------------------------------------------------------
 
 # Install PHP MongoDB
+RUN apt-get install -y libcurl4-openssl-dev pkg-config libssl-dev
 RUN pecl install mongodb
 RUN docker-php-ext-enable mongodb
+
+# strangely required by Symfony
+RUN apt-get install -y python2
+
+# install postgress
+RUN apt-get install -y libpq-dev
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
+RUN docker-php-ext-install pdo pgsql pdo_pgsql
 
 # Clean out directory
 RUN apt-get clean -y
