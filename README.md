@@ -6,27 +6,14 @@ Download the Docker Image at https://hub.docker.com/r/gusdecool/symfony
 
 ## How to use
 
-Use this image on your local computer by using docker compose. Create `docker-compose.yml` file
-on your Symfony root directory and copy paste the line below:
+Check the file [docker-compose.yml](./docker-compose.yml) for example how to init this repo
 
-```yaml
-version: "3.7"
-services:
-  app:
-    image: gusdecool/symfony
-    ports:
-      - 7100:80
-      - 7101:443
-    volumes:
-      - ./symfony:/app
-```
-
-Save the file and run `docker-compose up -d`. Once the command run successfully, open http://localhost:7100.
+Save the file and run `docker-compose up -d`. Once the command run successfully, open the specified ports in yml file.
 
 ## How to develop
 
 1. Have a copy of symfony codebase in `/symfony` directory. We can install it with command 
-    `composer create-project symfony/skeleton symfony`
+    `composer create-project symfony/website-skeleton symfony`. Note install the full symfony to check the functionality
 1. The container is expecting the symfony root directory will be synced to `/app` in docker container.
 
 # Docker commands
@@ -38,7 +25,7 @@ run `docker-compose up -d` to run the containers
 ## Build
 
 ```shell script
-docker build -t gusdecool/symfony .
+docker-compose build
 ```
 
 ## SSL certificate
