@@ -35,6 +35,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_15.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install --global yarn
 
+# Install PHP GD
+RUN apt-get install -y libpng-dev
+RUN docker-php-ext-install gd
+
 #----- Skip Host verification for git
 ARG USER_HOME_DIR=/root
 RUN mkdir ${USER_HOME_DIR}/.ssh/
