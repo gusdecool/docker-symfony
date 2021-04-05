@@ -36,7 +36,8 @@ RUN apt-get install -y nodejs
 RUN npm install --global yarn
 
 # Install PHP GD
-RUN apt-get install -y libpng-dev
+RUN apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev
+RUN docker-php-ext-configure gd --with-jpeg
 RUN docker-php-ext-install gd
 
 #----- Skip Host verification for git
