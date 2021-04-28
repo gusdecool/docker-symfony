@@ -25,10 +25,23 @@ services:
     build:
       context: ./
       dockerfile: php8.Dockerfile
-    image: gusdecool/symfony:8
+    image: gusdecool/symfony:php8
     ports:
       - 6003:80
       - 6004:443
+    volumes:
+      - ./symfony:/app
+      - composer_cache:/root/.composer/cache
+      - yarn_cache:/usr/local/share/.cache/yarn/v6
+    depends_on:
+      - db
+  php8-dev:
+    build:
+      context: ./
+      dockerfile: php8-dev.Dockerfile
+    image: gusdecool/symfony:php8-dev
+    ports:
+      - 6005:80
     volumes:
       - ./symfony:/app
       - composer_cache:/root/.composer/cache
