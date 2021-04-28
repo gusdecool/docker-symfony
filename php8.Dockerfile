@@ -16,11 +16,12 @@ WORKDIR /app
 RUN apt-get update -y \
     # add nodejs source
     && curl -fsSL https://deb.nodesource.com/setup_15.x | bash - \
-    && apt-get install -y zlibc git zip unzip zlib1g-dev libicu-dev g++ nodejs libpng-dev \
+    && apt-get install -y zlibc git zip unzip zlib1g-dev libicu-dev g++ nodejs libpng-dev libjpeg-dev libfreetype6-dev \
     && npm install --global yarn
 
 #----- Install Docker PHP extensions
-RUN docker-php-ext-install ctype iconv pdo_mysql opcache gd intl
+RUN docker-php-ext-configure gd \
+    && docker-php-ext-install ctype iconv pdo_mysql opcache gd intl gd
 
 #----- Skip Host verification for git
 ARG USER_HOME_DIR=/root
