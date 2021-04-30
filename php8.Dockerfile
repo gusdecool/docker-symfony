@@ -20,7 +20,7 @@ RUN apt-get update -y \
     && npm install --global yarn
 
 #----- Install Docker PHP extensions
-RUN docker-php-ext-configure gd \
+RUN docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install ctype iconv pdo_mysql opcache gd intl gd
 
 #----- Skip Host verification for git
