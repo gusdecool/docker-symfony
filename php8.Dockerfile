@@ -52,3 +52,6 @@ RUN sed -i \
 
 #----- Cleaning
 RUN apt-get clean -y
+
+#----- Setup php.ini
+RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
