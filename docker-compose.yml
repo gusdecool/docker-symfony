@@ -13,8 +13,8 @@ services:
   php74:
     build:
       context: ./
-      dockerfile: php7.4.Dockerfile
-    image: gusdecool/symfony:7.4
+      dockerfile: php7.4-dummy-ssl.Dockerfile
+    image: gusdecool/symfony:7.4-dummy-ssl
     ports:
       - 6001:80
       - 6002:443
