@@ -14,10 +14,13 @@ WORKDIR /app
 
 # OS Package install
 RUN apt-get update -y
-RUN apt-get install -y zlibc git zip unzip zlib1g-dev libicu-dev g++
+RUN apt-get install -y zlibc git zip unzip zlib1g-dev libicu-dev g++ libpng-dev libjpeg-dev libfreetype6-dev libzip-dev
 
 # PHP extension
-RUN docker-php-ext-install ctype iconv pdo_mysql opcache
+RUN docker-php-ext-configure gd \
+    --with-jpeg \
+    --with-freetype
+RUN docker-php-ext-install ctype iconv pdo_mysql opcache gd bcmath zip
 
 #----- Skip Host verification for git
 ARG USER_HOME_DIR=/root
