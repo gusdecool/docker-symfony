@@ -16,7 +16,9 @@ WORKDIR /app
 RUN apt-get update -y
 RUN apt-get install -y zlibc git zip unzip zlib1g-dev libicu-dev g++ libpng-dev libjpeg-dev libfreetype6-dev \
     # for GD
-    libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev
+    libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev \
+    # for twig extension
+    libxslt-dev
 
 #----- Install Node & Yarn
 RUN curl -fsSL https://deb.nodesource.com/setup_15.x | bash -
@@ -27,7 +29,7 @@ RUN npm install --global yarn
 RUN docker-php-ext-configure gd \
     --with-jpeg \
     --with-freetype
-RUN docker-php-ext-install ctype iconv pdo_mysql opcache gd intl gd
+RUN docker-php-ext-install ctype iconv pdo_mysql opcache gd intl gd xsl
 
 #----- Skip Host verification for git
 ARG USER_HOME_DIR=/root
