@@ -7,7 +7,7 @@
 
 FROM composer:2 AS composer
 
-FROM php:8-apache
+FROM php:8.0-apache
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 WORKDIR /app
@@ -31,7 +31,7 @@ RUN npm install --global yarn
 RUN docker-php-ext-configure gd \
     --with-jpeg \
     --with-freetype
-RUN docker-php-ext-install ctype iconv pdo_mysql opcache gd intl gd xsl zip
+RUN docker-php-ext-install ctype iconv pdo_mysql opcache gd intl gd xsl zip exif
 
 #----- Skip Host verification for git
 ARG USER_HOME_DIR=/root
