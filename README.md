@@ -1,7 +1,5 @@
 # Docker Image for Symfony Framework
 
-Master: [![CircleCI](https://circleci.com/gh/gusdecool/docker-symfony/tree/master.svg?style=svg)](https://circleci.com/gh/gusdecool/docker-symfony/tree/master)
-
 Download the Docker Image at https://hub.docker.com/r/gusdecool/symfony
 
 ## How to use
