@@ -10,27 +10,27 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root_pass
       - MYSQL_DATABASE=app
-#  php74:
-#    build:
-#      context: ./
-#      dockerfile: php7.4.Dockerfile
-#    image: gusdecool/symfony:7.4
-#    ports:
-#      - 6006:80
-#    volumes:
-#      - ./symfony:/app
-#      - composer_cache:/root/.composer/cache
-#  php74_dummy_ssl:
-#    build:
-#      context: ./
-#      dockerfile: php7.4-dummy-ssl.Dockerfile
-#    image: gusdecool/symfony:7.4-dummy-ssl
-#    ports:
-#      - 6001:80
-#      - 6002:443
-#    volumes:
-#      - ./symfony:/app
-#      - composer_cache:/root/.composer/cache
+  php74:
+    build:
+      context: ./
+      dockerfile: php7.4.Dockerfile
+    image: gusdecool/symfony:7.4
+    ports:
+      - 6006:80
+    volumes:
+      - ./symfony:/app
+      - composer_cache:/root/.composer/cache
+  php74_dummy_ssl:
+    build:
+      context: ./
+      dockerfile: php7.4-dummy-ssl.Dockerfile
+    image: gusdecool/symfony:7.4-dummy-ssl
+    ports:
+      - 6001:80
+      - 6002:443
+    volumes:
+      - ./symfony:/app
+      - composer_cache:/root/.composer/cache
   php8:
     build:
       context: ./
@@ -45,19 +45,19 @@ services:
       - yarn_cache:/usr/local/share/.cache/yarn/v6
     depends_on:
       - db
-#  php8-dev:
-#    build:
-#      context: ./
-#      dockerfile: php8-dev.Dockerfile
-#    image: gusdecool/symfony:php8-dev
-#    ports:
-#      - 6005:80
-#    volumes:
-#      - ./symfony:/app
-#      - composer_cache:/root/.composer/cache
-#      - yarn_cache:/usr/local/share/.cache/yarn/v6
-#    depends_on:
-#      - db
+  php8-dev:
+    build:
+      context: ./
+      dockerfile: php8-dev.Dockerfile
+    image: gusdecool/symfony:php8-dev
+    ports:
+      - 6005:80
+    volumes:
+      - ./symfony:/app
+      - composer_cache:/root/.composer/cache
+      - yarn_cache:/usr/local/share/.cache/yarn/v6
+    depends_on:
+      - db
 volumes:
   composer_cache:
   yarn_cache:
