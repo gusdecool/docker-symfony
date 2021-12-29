@@ -23,7 +23,7 @@ RUN apt-get install -y git zip unzip zlib1g-dev libicu-dev g++ libpng-dev libjpe
     libzip-dev
 
 #----- Install Node & Yarn
-RUN curl -fsSL https://deb.nodesource.com/setup_15.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install --global yarn
 
@@ -65,3 +65,5 @@ RUN apt-get clean -y
 
 #----- Setup php.ini
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+RUN sed -i "s|upload_max_filesize = 2M|upload_max_filesize = 10M|g" /usr/local/etc/php/php.ini
+RUN sed -i "s|post_max_size = 8M|upload_max_filesize = 10M|g" /usr/local/etc/php/php.ini
