@@ -30,6 +30,7 @@ RUN npm install --global yarn
 #----- Install Docker PHP extensions
 RUN docker-php-ext-configure gd \
     --with-jpeg \
+    --with-webp \
     --with-freetype
 RUN docker-php-ext-install ctype iconv pdo_mysql opcache gd intl gd xsl zip exif
 
