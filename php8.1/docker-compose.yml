@@ -1,0 +1,24 @@
+# docker compose to test run symfony 6.4
+name: docker-symfony-81
+services:
+#  db:
+#    image: library/mysql:8.0
+#    restart: on-failure
+##    volumes:
+##      - db_data:/var/lib/mysql
+#    ports:
+#      - 3306:3306
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=root_pass
+#      - MYSQL_DATABASE=app
+  http:
+    image: nginx:latest
+    volumes:
+      - ./symfony-6.4:/app:ro
+      - ../nginx/site.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 9090:80
+  php:
+    image: gusdecool/symfony:php8.1
+    volumes:
+      - ./symfony-6.4:/app

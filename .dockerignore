@@ -1,0 +1,23 @@
+# Ignore .git directory
+.git
+
+# Ignore .gitignore file
+.gitignore
+
+# Ignore Dockerfile
+Dockerfile
+
+# Ignore docker-compose.yml
+docker-compose.yml
+
+# Ignore all markdown files
+*.md
+
+# Ignore all log files
+*.log
+
+# Ignore all temporary files
+*~
+
+# ignore all symfony instances
+symfony-*/
