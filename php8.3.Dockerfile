@@ -1,7 +1,7 @@
 # docker image prod designed for AWS AppRunner
 # contents
-# PHP 8.3
-# WebServer nginx
+# - PHP 8.3
+# - WebServer nginx
 FROM composer:2 AS composer
 
 FROM php:8.3-fpm-alpine
@@ -15,14 +15,14 @@ ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/relea
 RUN install-php-extensions mysqli pdo_mysql intl
 
 # setup PHP .ini
-COPY php-config/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
+COPY docker-config/php-error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
 
 # configure PHP-FPM to forward error logs to Docker
 RUN echo "catch_workers_output = yes" >> /usr/local/etc/php-fpm.d/www.conf
 
 # setup nginx
 RUN apk add nginx
-COPY nginx-config/site.conf /etc/nginx/http.d/*.conf
+COPY docker-config/nginx-site.conf /etc/nginx/http.d/*.conf
 
 # to allow composer to run executable file
 ENV COMPOSER_ALLOW_SUPERUSER=1
