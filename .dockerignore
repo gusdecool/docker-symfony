@@ -20,4 +20,4 @@ docker-compose.yml
 *~
 
 # ignore all symfony instances
-symfony-*/
+symfony/

@@ -2,4 +2,4 @@
 /symfony/
 
 # ignore all symfony- folder instances
-symfony-*/
+symfony/
