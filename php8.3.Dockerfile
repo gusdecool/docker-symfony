@@ -12,7 +12,7 @@ WORKDIR /app
 ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 # install php extensions
-RUN install-php-extensions mysqli pdo_mysql intl
+RUN install-php-extensions mysqli pdo_mysql intl bcmath
 
 # setup PHP .ini
 COPY docker-config/php-error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
