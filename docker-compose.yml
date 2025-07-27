@@ -1,0 +1,7 @@
+services:
+  app:
+    image: gusdecool/symfony:8.3-dev
+    volumes:
+      - ./:/app
+    ports:
+      - "8090:80"
