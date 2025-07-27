@@ -32,3 +32,6 @@ EXPOSE 80
 
 # fix warning JSONArgsRecommended: JSON arguments recommended for CMD to prevent unintended behavior related to OS signals (line 38)
 CMD ["sh", "-c", "nginx -g 'daemon off;' & php-fpm"]
+
+# install nodejs and npm
+RUN apk add --no-cache nodejs npm
