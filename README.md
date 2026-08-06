@@ -45,3 +45,6 @@ make php83-run
 ```
 
 Open in browser http://localhost:6000 to make sure it works as expected
+
+## Continuous deployment
+Pushes to `master` trigger [`.github/workflows/docker-publish.yml`](.github/workflows/docker-publish.yml), which builds every prod/dev image pair and pushes them to Docker Hub. The workflow needs `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` configured as repository secrets.
