@@ -1,0 +1,25 @@
+name: Test Docker builds
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  # Each -dev Dockerfile is FROM the matching prod tag (see docker-publish.yml),
+  # which may not exist on Docker Hub yet (e.g. a PR introducing a new PHP
+  # version). Build prod first and let dev resolve it from docker's local
+  # image cache instead, so no registry push/pull is needed to test either.
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [php8.3, php8.4]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build ${{ matrix.version }} (prod)
+        run: docker build -f ${{ matrix.version }}.Dockerfile -t gusdecool/symfony:${{ matrix.version }} .
+
+      - name: Build ${{ matrix.version }}-dev
+        run: docker build -f ${{ matrix.version }}-dev.Dockerfile -t gusdecool/symfony:${{ matrix.version }}-dev .
