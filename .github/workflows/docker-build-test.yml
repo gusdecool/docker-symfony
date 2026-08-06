@@ -1,0 +1,39 @@
+name: Test Docker builds
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - dockerfile: php8.3.Dockerfile
+            tag: php8.3
+          - dockerfile: php8.3-dev.Dockerfile
+            tag: php8.3-dev
+          - dockerfile: php8.4.Dockerfile
+            tag: php8.4
+          - dockerfile: php8.4-dev.Dockerfile
+            tag: php8.4-dev
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Build only, no push — validates the Dockerfile builds successfully.
+      # Note: the -dev Dockerfiles are FROM the already-published prod tag on
+      # Docker Hub (see docker-publish.yml), so a dev build here tests the
+      # xdebug layer but not this PR's prod Dockerfile changes; the matching
+      # prod entry in this same matrix covers that.
+      - name: Build ${{ matrix.tag }}
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./${{ matrix.dockerfile }}
+          push: false
+          tags: gusdecool/symfony:${{ matrix.tag }}
