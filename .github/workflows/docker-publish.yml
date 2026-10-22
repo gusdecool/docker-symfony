@@ -15,6 +15,9 @@ concurrency:
 jobs:
   build-prod:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write # upload the CVE scan results to code scanning
     strategy:
       matrix:
         include:
@@ -46,6 +49,26 @@ jobs:
           tags: gusdecool/symfony:${{ matrix.tag }}
           cache-from: type=registry,ref=gusdecool/symfony:${{ matrix.tag }}
           cache-to: type=inline
+
+      # print the exact PHP version so it is readable in the build log
+      - name: Print PHP version (${{ matrix.tag }})
+        run: docker run --rm gusdecool/symfony:${{ matrix.tag }} php -v
+
+      # Grype recognises the compiled PHP binary (it is not a Debian package), so PHP CVEs show up too.
+      # Report only: fail-build is off, results go to Security > Code scanning.
+      - name: Scan ${{ matrix.tag }} for CVEs
+        id: scan
+        uses: anchore/scan-action@v7
+        with:
+          image: gusdecool/symfony:${{ matrix.tag }}
+          only-fixed: true
+          fail-build: false
+
+      - name: Upload CVE report (${{ matrix.tag }})
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+          category: grype-${{ matrix.tag }}
 
   # dev images build FROM the published prod tag (see php8.x-dev.Dockerfile),
   # so they must run after build-prod has pushed the images they extend.
