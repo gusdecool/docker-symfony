@@ -35,8 +35,10 @@ EXPOSE 80
 CMD ["sh", "-c", "nginx -g 'daemon off;' & php-fpm"]
 
 # install nodejs and npm (NodeSource repo, since Debian's own nodejs/npm
-# packages pull in a large tree of repackaged node-* library dependencies)
+# packages pull in a large tree of repackaged node-* library dependencies).
+# npm is upgraded because the copy bundled with nodejs ships vulnerable dependencies.
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl gnupg \
     && curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -y --no-install-recommends nodejs \
+    && npm install -g npm@latest \
     && rm -rf /var/lib/apt/lists/*
