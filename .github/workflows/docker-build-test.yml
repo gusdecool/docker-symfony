@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [php8.3, php8.4]
+        version: [php8.3, php8.4, php8.5]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build ${{ matrix.version }} (prod)
         run: docker build -f ${{ matrix.version }}.Dockerfile -t gusdecool/symfony:${{ matrix.version }} .

@@ -1,6 +1,6 @@
 services:
   app:
-    image: gusdecool/symfony:8.3-dev
+    image: gusdecool/symfony:php8.5-dev
     volumes:
       - ./:/app
     ports:
