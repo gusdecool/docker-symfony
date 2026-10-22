@@ -20,6 +20,12 @@ make php84-build
 make php84-run
 ```
 
+Build and run PHP 8.5 images:
+```shell
+make php85-build
+make php85-run
+```
+
 Push images to Docker Hub:
 ```shell
 make push-image
@@ -46,10 +52,10 @@ Shared PHP/nginx configuration lives in `docker-config/` and is `COPY`'d into th
 
 When adding support for a new PHP version, mirror the existing `php<version>.Dockerfile` / `php<version>-dev.Dockerfile` pair and add matching `php<version>-build` / `php<version>-run` targets (and push-image entries) to the `Makefile`.
 
-`docker-compose.yml` runs the published dev image directly (`gusdecool/symfony:8.3-dev`) against a local `./` mount, useful for consuming the image without rebuilding it.
+`docker-compose.yml` runs the published dev image directly (`gusdecool/symfony:php8.5-dev`) against a local `./` mount, useful for consuming the image without rebuilding it.
 
 ## CI/CD
 
-`.github/workflows/docker-publish.yml` runs on every push to `master` and publishes all four images to Docker Hub. It's split into two sequenced jobs: `build-prod` builds and pushes the prod images (`php8.3`, `php8.4`), then `build-dev` (which `needs: build-prod`) builds and pushes the dev images. This ordering is required because each `php<version>-dev.Dockerfile` starts `FROM gusdecool/symfony:php<version>` — i.e. it pulls the just-published prod tag from Docker Hub rather than building on a local layer, so the prod image must already be pushed before the dev build starts. The workflow expects `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` repository secrets. When adding a new PHP version, add both its prod and dev entries to the respective job's matrix.
+`.github/workflows/docker-publish.yml` runs on every push to `master`, weekly (Mondays 03:00 UTC, to pick up base-image/Debian security patches) and on manual dispatch, and publishes all six images to Docker Hub. It's split into two sequenced jobs: `build-prod` builds and pushes the prod images (`php8.3`, `php8.4`, `php8.5`), then `build-dev` (which `needs: build-prod`) builds and pushes the dev images. This ordering is required because each `php<version>-dev.Dockerfile` starts `FROM gusdecool/symfony:php<version>` — i.e. it pulls the just-published prod tag from Docker Hub rather than building on a local layer, so the prod image must already be pushed before the dev build starts. The workflow expects `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` repository secrets. When adding a new PHP version, add both its prod and dev entries to the respective job's matrix.
 
-`.github/workflows/docker-build-test.yml` runs on pull requests targeting `master` and build-tests all four Dockerfiles as a merge gate, using plain `docker build` (no push, no secrets needed). It's matrixed per PHP version (`php8.3`, `php8.4`), and within each matrix job the prod image is built first and tagged locally as `gusdecool/symfony:php<version>` before the dev image is built — Docker resolves the dev Dockerfile's `FROM gusdecool/symfony:php<version>` against that local tag instead of pulling from Docker Hub, which matters because the tag may not exist there yet (e.g. a PR introducing a new PHP version, before `docker-publish.yml` has ever pushed it).
+`.github/workflows/docker-build-test.yml` runs on pull requests targeting `master` and build-tests all six Dockerfiles as a merge gate, using plain `docker build` (no push, no secrets needed). It's matrixed per PHP version (`php8.3`, `php8.4`, `php8.5`), and within each matrix job the prod image is built first and tagged locally as `gusdecool/symfony:php<version>` before the dev image is built — Docker resolves the dev Dockerfile's `FROM gusdecool/symfony:php<version>` against that local tag instead of pulling from Docker Hub, which matters because the tag may not exist there yet (e.g. a PR introducing a new PHP version, before `docker-publish.yml` has ever pushed it).

@@ -7,14 +7,14 @@ Download the Docker Image at https://hub.docker.com/r/gusdecool/symfony
 1. Create a project directory and scaffold a Symfony project into it using the image's Composer — no local PHP/Composer install needed. Use the current LTS version, currently 6.4.x:
 ```shell
 mkdir my-project && cd my-project
-docker run -it --rm -v "$(pwd):/app" gusdecool/symfony:php8.4 composer create-project "symfony/skeleton:6.4.*" /app
+docker run -it --rm -v "$(pwd):/app" gusdecool/symfony:php8.5 composer create-project "symfony/skeleton:6.4.*" /app
 ```
 
 2. Add a `docker-compose.yml` in the project root to run the app. Use the `-dev` tag for local development (includes Xdebug), or drop the `-dev` suffix for a prod-like image:
 ```yaml
 services:
   app:
-    image: gusdecool/symfony:php8.4-dev
+    image: gusdecool/symfony:php8.5-dev
     volumes:
       - ./:/app
     ports:
